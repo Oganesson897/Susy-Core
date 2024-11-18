@@ -1,5 +1,15 @@
 package supersymmetry.common.metatileentities.multi.electric;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -16,20 +26,13 @@ import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
 import gregtech.common.blocks.BlockTurbineCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.blocks.StoneVariantBlock;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import supersymmetry.api.recipes.SuSyRecipeMaps;
 import supersymmetry.client.renderer.textures.SusyTextures;
 import supersymmetry.common.blocks.BlockMultiblockTank;
 import supersymmetry.common.blocks.SuSyBlocks;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
 public class MetaTileEntityClarifier extends RecipeMapMultiblockController {
+
     public MetaTileEntityClarifier(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, SuSyRecipeMaps.CLARIFIER);
         this.recipeMapWorkable = new MultiblockRecipeLogic(this, true);
@@ -58,16 +61,21 @@ public class MetaTileEntityClarifier extends RecipeMapMultiblockController {
                 .aisle("    AAAAAAAAC   ", "    AADDDDAA    ", "    AA    AA    ", "                ")
                 .aisle("      AAAA BBB  ", "      AAAA BSB  ", "      AAAA      ", "                ")
                 .where('S', selfPredicate())
-                .where('A', states(MetaBlocks.STONE_BLOCKS.get(StoneVariantBlock.StoneVariant.SMOOTH).getState(StoneVariantBlock.StoneType.CONCRETE_LIGHT)).setMinGlobalLimited(250)
-                        .or(autoAbilities()))
+                .where('A',
+                        states(MetaBlocks.STONE_BLOCKS.get(StoneVariantBlock.StoneVariant.SMOOTH)
+                                .getState(StoneVariantBlock.StoneType.CONCRETE_LIGHT)).setMinGlobalLimited(250)
+                                        .or(autoAbilities()))
                 .where('B', states(MetaBlocks.METAL_CASING.getState(MetalCasingType.STEEL_SOLID)))
                 .where('C', states(MetaBlocks.BOILER_CASING.getState((BoilerCasingType.STEEL_PIPE))))
-                .where('D', states(SuSyBlocks.MULTIBLOCK_TANK.getState(BlockMultiblockTank.MultiblockTankType.CLARIFIER)))
-                .where('E', states(MetaBlocks.TURBINE_CASING.getState(BlockTurbineCasing.TurbineCasingType.STEEL_GEARBOX)))
+                .where('D',
+                        states(SuSyBlocks.MULTIBLOCK_TANK.getState(BlockMultiblockTank.MultiblockTankType.CLARIFIER)))
+                .where('E',
+                        states(MetaBlocks.TURBINE_CASING.getState(BlockTurbineCasing.TurbineCasingType.STEEL_GEARBOX)))
                 .where('F', frames(Materials.Steel))
                 .where(' ', any())
                 .build();
     }
+
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return Textures.SOLID_STEEL_CASING;
     }

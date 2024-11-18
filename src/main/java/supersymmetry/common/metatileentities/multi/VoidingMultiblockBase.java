@@ -1,5 +1,11 @@
 package supersymmetry.common.metatileentities.multi;
 
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.IFluidTank;
+
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
@@ -12,13 +18,9 @@ import gregtech.api.metatileentity.multiblock.MultiblockWithDisplayBase;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.info.MaterialFlags;
 import it.unimi.dsi.fastutil.objects.Object2BooleanOpenHashMap;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.IFluidTank;
 
 public abstract class VoidingMultiblockBase extends MultiblockWithDisplayBase {
+
     // Update this value based on your needs
     // For instance, if you want your glorified trashcan to be tiered
     public int rateBonus = 1;
@@ -34,17 +36,16 @@ public abstract class VoidingMultiblockBase extends MultiblockWithDisplayBase {
 
     @Override
     protected void updateFormedValid() {
-        if(this.getWorld().isRemote) return;
-        if(getOffsetTimer() % voidingFrequency == 0) {
+        if (this.getWorld().isRemote) return;
+        if (getOffsetTimer() % voidingFrequency == 0) {
             this.active = false;
-            for (IFluidTank tank:
-                    getAbilities(MultiblockAbility.IMPORT_FLUIDS)) {
+            for (IFluidTank tank : getAbilities(MultiblockAbility.IMPORT_FLUIDS)) {
                 FluidStack fs = tank.getFluid();
-                if(fs != null) {
+                if (fs != null) {
                     Fluid fluid = fs.getFluid();
                     boolean voidable = fluidCache.computeIfAbsent(fluid, this::canVoid);
-                    //TODO: Cache this?
-                    if(voidable) {
+                    // TODO: Cache this?
+                    if (voidable) {
                         tank.drain(this.getActualVoidingRate(), true);
                         this.active = true;
                     }
@@ -97,7 +98,7 @@ public abstract class VoidingMultiblockBase extends MultiblockWithDisplayBase {
     @Override
     public void receiveCustomData(int dataId, PacketBuffer buf) {
         super.receiveCustomData(dataId, buf);
-        if(dataId == GregtechDataCodes.IS_WORKING) {
+        if (dataId == GregtechDataCodes.IS_WORKING) {
             this.active = this.lastActive;
         }
     }

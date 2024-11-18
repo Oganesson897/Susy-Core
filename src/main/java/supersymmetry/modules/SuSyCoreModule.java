@@ -1,18 +1,19 @@
 package supersymmetry.modules;
 
-import gregtech.api.modules.GregTechModule;
-import gregtech.api.modules.IGregTechModule;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+
+import gregtech.api.modules.GregTechModule;
+import gregtech.api.modules.IGregTechModule;
 import supersymmetry.Supersymmetry;
 import supersymmetry.api.SusyLog;
 
 @GregTechModule(
-        moduleID = SuSyModules.MODULE_CORE,
-        containerID = Supersymmetry.MODID,
-        name = "SuSy Core",
-        description = "Core module of SuSy Core, so this should call SuSy Core Core ngl.",
-        coreModule = true)
+                moduleID = SuSyModules.MODULE_CORE,
+                containerID = Supersymmetry.MODID,
+                name = "SuSy Core",
+                description = "Core module of SuSy Core, so this should call SuSy Core Core ngl.",
+                coreModule = true)
 public class SuSyCoreModule implements IGregTechModule {
 
     @Override

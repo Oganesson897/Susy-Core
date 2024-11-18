@@ -1,5 +1,15 @@
 package supersymmetry.common.metatileentities.multi.electric;
 
+import static gregtech.api.util.RelativeDirection.*;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -13,21 +23,14 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityMultiFluidHatch;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import supersymmetry.api.metatileentity.multiblock.ICryogenicProvider;
 import supersymmetry.api.metatileentity.multiblock.ICryogenicReceiver;
 import supersymmetry.api.recipes.SuSyRecipeMaps;
 import supersymmetry.common.blocks.BlockSuSyMultiblockCasing;
 import supersymmetry.common.blocks.SuSyBlocks;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import static gregtech.api.util.RelativeDirection.*;
-
-public class MetaTileEntitySingleColumnCryogenicDistillationPlant extends RecipeMapMultiblockController implements ICryogenicProvider {
+public class MetaTileEntitySingleColumnCryogenicDistillationPlant extends RecipeMapMultiblockController
+                                                                  implements ICryogenicProvider {
 
     private @Nullable ICryogenicReceiver receiver;
 
@@ -44,7 +47,7 @@ public class MetaTileEntitySingleColumnCryogenicDistillationPlant extends Recipe
         return FactoryBlockPattern.start(RIGHT, FRONT, UP)
                 .aisle("CCC", "CCC", "CCC")
                 .aisle("CSC", "CFC", "CCC")
-                .aisle("XXX", "XFX", "XXX").setRepeatable(1,16)
+                .aisle("XXX", "XFX", "XXX").setRepeatable(1, 16)
                 .aisle("CCC", "CCC", "CCC")
                 .aisle("CEC", "E E", "CEC")
                 .aisle("DDD", "DED", "DDD")
@@ -53,16 +56,18 @@ public class MetaTileEntitySingleColumnCryogenicDistillationPlant extends Recipe
                         .or(abilities(MultiblockAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(3))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1))
                         .or(autoAbilities(false, true, false, false, false, false, false).setExactLimit(1)))
-                .where('F', states(SuSyBlocks.MULTIBLOCK_CASING.getState(BlockSuSyMultiblockCasing.CasingType.STRUCTURAL_PACKING)))
+                .where('F',
+                        states(SuSyBlocks.MULTIBLOCK_CASING
+                                .getState(BlockSuSyMultiblockCasing.CasingType.STRUCTURAL_PACKING)))
                 .where('X', states(getCasingState())
                         .or(metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.EXPORT_FLUIDS).stream()
-                                .filter(mte->!(mte instanceof MetaTileEntityMultiFluidHatch))
+                                .filter(mte -> !(mte instanceof MetaTileEntityMultiFluidHatch))
                                 .toArray(MetaTileEntity[]::new))
-                                .setMaxLayerLimited(1))
+                                        .setMaxLayerLimited(1))
                         .or(metaTileEntities(MultiblockAbility.REGISTRY.get(MultiblockAbility.IMPORT_FLUIDS).stream()
-                                .filter(mte->!(mte instanceof MetaTileEntityMultiFluidHatch))
+                                .filter(mte -> !(mte instanceof MetaTileEntityMultiFluidHatch))
                                 .toArray(MetaTileEntity[]::new))
-                                .setMaxLayerLimited(1)))
+                                        .setMaxLayerLimited(1)))
                 .where('D', states(this.getCasingState()))
                 .where('E', states(this.getCasingState())
                         .or(abilities(MultiblockAbility.PASSTHROUGH_HATCH)))

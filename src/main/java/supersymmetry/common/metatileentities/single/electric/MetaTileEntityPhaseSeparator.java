@@ -1,5 +1,18 @@
 package supersymmetry.common.metatileentities.single.electric;
 
+import static gregtech.api.recipes.logic.OverclockingLogic.standardOverclockingLogic;
+
+import java.util.List;
+import java.util.function.Supplier;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import gregtech.api.GTValues;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.impl.EnergyContainerHandler;
@@ -9,19 +22,8 @@ import gregtech.api.metatileentity.SimpleMachineMetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.recipeproperties.IRecipePropertyStorage;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import supersymmetry.api.recipes.SuSyRecipeMaps;
 import supersymmetry.client.renderer.textures.SusyTextures;
-
-import java.util.List;
-import java.util.function.Supplier;
-
-import static gregtech.api.recipes.logic.OverclockingLogic.standardOverclockingLogic;
 
 public class MetaTileEntityPhaseSeparator extends SimpleMachineMetaTileEntity {
 
@@ -42,6 +44,7 @@ public class MetaTileEntityPhaseSeparator extends SimpleMachineMetaTileEntity {
     @Override
     protected void reinitializeEnergyContainer() {
         this.energyContainer = new EnergyContainerHandler(this, 0, 0, 0, 0, 0) {
+
             @Override
             public boolean isOneProbeHidden() {
                 return true;
@@ -60,7 +63,8 @@ public class MetaTileEntityPhaseSeparator extends SimpleMachineMetaTileEntity {
     // TODO make this extend PrimitiveRecipeLogic in GT 2.9
     private static class PhaseSeparatorRecipeLogic extends RecipeLogicEnergy {
 
-        public PhaseSeparatorRecipeLogic(MetaTileEntity metaTileEntity, RecipeMap<?> recipeMap, Supplier<IEnergyContainer> energyContainer) {
+        public PhaseSeparatorRecipeLogic(MetaTileEntity metaTileEntity, RecipeMap<?> recipeMap,
+                                         Supplier<IEnergyContainer> energyContainer) {
             super(metaTileEntity, recipeMap, energyContainer);
         }
 
@@ -104,8 +108,7 @@ public class MetaTileEntityPhaseSeparator extends SimpleMachineMetaTileEntity {
                     recipeDuration,
                     amountOC,
                     getOverclockingDurationDivisor(),
-                    getOverclockingVoltageMultiplier()
-            );
+                    getOverclockingVoltageMultiplier());
         }
 
         @Override

@@ -1,5 +1,9 @@
 package supersymmetry.api.capability.impl;
 
+import static supersymmetry.api.util.SuSyUtility.JOULES_PER_EU;
+
+import javax.annotation.Nonnull;
+
 import gregtech.api.GTValues;
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.recipes.Recipe;
@@ -8,11 +12,8 @@ import supersymmetry.api.SusyLog;
 import supersymmetry.api.recipes.properties.EvaporationEnergyProperty;
 import supersymmetry.common.metatileentities.multi.electric.MetaTileEntityEvaporationPool;
 
-import javax.annotation.Nonnull;
-
-import static supersymmetry.api.util.SuSyUtility.JOULES_PER_EU;
-
 public class EvapRecipeLogic extends MultiblockRecipeLogic {
+
     private final MetaTileEntityEvaporationPool pool;
 
     public EvapRecipeLogic(MetaTileEntityEvaporationPool tileEntity) {
@@ -25,7 +26,8 @@ public class EvapRecipeLogic extends MultiblockRecipeLogic {
             trySearchNewRecipe(); // try to recover recipe which was last being worked on
 
             // if recipe is not recovered, invalidate recipe logic
-            if (this.previousRecipe == null || !this.previousRecipe.hasProperty(EvaporationEnergyProperty.getInstance())) {
+            if (this.previousRecipe == null ||
+                    !this.previousRecipe.hasProperty(EvaporationEnergyProperty.getInstance())) {
                 SusyLog.logger.atError().log("Recipe could not be located");
                 return 0;
             }
@@ -34,25 +36,40 @@ public class EvapRecipeLogic extends MultiblockRecipeLogic {
         return this.previousRecipe.getProperty(EvaporationEnergyProperty.getInstance(), -1);
     }
 
-    //do not attempt to run invalid recipes
+    // do not attempt to run invalid recipes
     @Override
     public boolean checkRecipe(Recipe recipe) {
-        return recipe.hasProperty(EvaporationEnergyProperty.getInstance()) && recipe.getProperty(EvaporationEnergyProperty.getInstance(), -1) != -1;
+        return recipe.hasProperty(EvaporationEnergyProperty.getInstance()) &&
+                recipe.getProperty(EvaporationEnergyProperty.getInstance(), -1) != -1;
     }
-
 
     @Override
     protected void updateRecipeProgress() {
-        //if null then no heating can be done, otherwise add joules according to coil values and energy available
+        // if null then no heating can be done, otherwise add joules according to coil values and energy available
         boolean coilHeated = false;
         if (pool.coilStats != null && pool.isHeated()) {
             // attempt to input energy from coil dependent on its heat and the number of coils for the given size pool
             int coilHeat = pool.coilStats.getCoilTemperature();
-            int electricEnergy = coilHeat * (((pool.getColumnCount() / 2 + 1) * pool.getRowCount()) + pool.getColumnCount() / 2) / JOULES_PER_EU; // converted to EU to save on divisions
-            if (electricEnergy > pool.getEnergyContainer().getEnergyStored()) electricEnergy = (int) pool.getEnergyContainer().getEnergyStored();
-            boolean couldInput = pool.inputEnergy(electricEnergy * JOULES_PER_EU); // if room is available in thermal energy storage
+            int electricEnergy = coilHeat *
+                    (((pool.getColumnCount() / 2 + 1) * pool.getRowCount()) + pool.getColumnCount() / 2) /
+                    JOULES_PER_EU; // converted to EU to save on divisions
+            if (electricEnergy > pool.getEnergyContainer().getEnergyStored())
+                electricEnergy = (int) pool.getEnergyContainer().getEnergyStored();
+            boolean couldInput = pool.inputEnergy(electricEnergy * JOULES_PER_EU); // if room is available in thermal
+                                                                                   // energy storage
             if (couldInput) {
-                pool.getEnergyContainer().removeEnergy((electricEnergy) / pool.coilStats.getEnergyDiscount()); //energy should always be available as heatingJoules is either itself or energy*JpEU
+                pool.getEnergyContainer().removeEnergy((electricEnergy) / pool.coilStats.getEnergyDiscount()); // energy
+                                                                                                               // should
+                                                                                                               // always
+                                                                                                               // be
+                                                                                                               // available
+                                                                                                               // as
+                                                                                                               // heatingJoules
+                                                                                                               // is
+                                                                                                               // either
+                                                                                                               // itself
+                                                                                                               // or
+                                                                                                               // energy*JpEU
                 coilHeated = electricEnergy > 0;
             }
         }
@@ -68,7 +85,7 @@ public class EvapRecipeLogic extends MultiblockRecipeLogic {
 
         int maxSteps = pool.calcMaxSteps(Jt);
 
-        //if the recipe can progress and at least one step can be taken
+        // if the recipe can progress and at least one step can be taken
         if (maxSteps > 0) {
             hasNotEnoughEnergy = false;
             pool.isRecipeStalled = false;
@@ -79,24 +96,29 @@ public class EvapRecipeLogic extends MultiblockRecipeLogic {
             int kJFloor = getJt() * actualSteps / 1000;
             int joulesNeeded;
 
-            //if kJ store is insufficient to cover full cost, joulesNeeded is whatever remains after kJ covers cost
+            // if kJ store is insufficient to cover full cost, joulesNeeded is whatever remains after kJ covers cost
             if (pool.getKiloJoules() <= kJFloor) {
-                joulesNeeded = getJt() * actualSteps - pool.getKiloJoules() * 1000; // because actualSteps is <= max steps with energy available, pool should always be able to cover it
+                joulesNeeded = getJt() * actualSteps - pool.getKiloJoules() * 1000; // because actualSteps is <= max
+                                                                                    // steps with energy available, pool
+                                                                                    // should always be able to cover it
             } else {
-                joulesNeeded = getJt() * actualSteps - kJFloor * 1000; //difference in joules betweeen kJ losslessly required and J actually required (4kJ covers 3kJ out of 3600J, but 600J are needed to avoid wasting kJ)
+                joulesNeeded = getJt() * actualSteps - kJFloor * 1000; // difference in joules betweeen kJ losslessly
+                                                                       // required and J actually required (4kJ covers
+                                                                       // 3kJ out of 3600J, but 600J are needed to avoid
+                                                                       // wasting kJ)
             }
 
-            //if buffer cant cover draw entirely from kiloJoules
+            // if buffer cant cover draw entirely from kiloJoules
             if (pool.getJoulesBuffer() < joulesNeeded) {
                 ++kJFloor;
                 joulesNeeded = 0;
             }
 
-            //drain appropriately
+            // drain appropriately
             pool.setKiloJoules(pool.getKiloJoules() - kJFloor);
             pool.setJoulesBuffer(pool.getJoulesBuffer() - joulesNeeded);
 
-            progressTime += actualSteps; //actualSteps <= maxSteps, meaning it can always be progressed this amount
+            progressTime += actualSteps; // actualSteps <= maxSteps, meaning it can always be progressed this amount
             if (this.progressTime >= this.maxProgressTime) completeRecipe();
         } else {
             this.hasNotEnoughEnergy = true;
@@ -104,7 +126,7 @@ public class EvapRecipeLogic extends MultiblockRecipeLogic {
         }
     }
 
-    //copied from NoEnergyMultiblockRecipeLogic and modified to allow energy and no energy
+    // copied from NoEnergyMultiblockRecipeLogic and modified to allow energy and no energy
     @Override
     protected long getEnergyInputPerSecond() {
         return super.getEnergyInputPerSecond() == 0 ? 2147483647L : super.getEnergyInputPerSecond();
@@ -149,8 +171,9 @@ public class EvapRecipeLogic extends MultiblockRecipeLogic {
     }
 
     @Override
-    protected int[] runOverclockingLogic(@Nonnull IRecipePropertyStorage propertyStorage, int recipeEUt, long maxVoltage, int recipeDuration, int amountOC) {
-        return new int[]{recipeEUt, recipeDuration}; // change nothing with overclocking
+    protected int[] runOverclockingLogic(@Nonnull IRecipePropertyStorage propertyStorage, int recipeEUt,
+                                         long maxVoltage, int recipeDuration, int amountOC) {
+        return new int[] { recipeEUt, recipeDuration }; // change nothing with overclocking
     }
 
     @Override

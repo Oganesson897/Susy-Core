@@ -1,13 +1,12 @@
 package supersymmetry.common.materials;
 
-import gregtech.api.unification.material.Material;
-import supersymmetry.api.util.SuSyUtility;
-
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.material.info.MaterialFlags.*;
 import static gregtech.api.unification.material.info.MaterialIconSet.ROUGH;
-
 import static supersymmetry.common.materials.SusyMaterials.*;
+
+import gregtech.api.unification.material.Material;
+import supersymmetry.api.util.SuSyUtility;
 
 public class SuSySecondDegreeMaterials {
 
@@ -60,6 +59,5 @@ public class SuSySecondDegreeMaterials {
                 .flags(NO_SMASHING, DISABLE_DECOMPOSITION)
                 .components(Forsterite, 3, Augite, 3, Andradite, 2, Lizardite, 1)
                 .build();
-
     }
 }

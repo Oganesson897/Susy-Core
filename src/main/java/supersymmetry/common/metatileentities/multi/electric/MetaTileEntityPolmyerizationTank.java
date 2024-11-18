@@ -1,5 +1,16 @@
 package supersymmetry.common.metatileentities.multi.electric;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+
 import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
@@ -14,18 +25,10 @@ import gregtech.client.utils.TooltipHelper;
 import gregtech.common.blocks.BlockBoilerCasing.BoilerCasingType;
 import gregtech.common.blocks.BlockMetalCasing.MetalCasingType;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import supersymmetry.api.recipes.SuSyRecipeMaps;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
 public class MetaTileEntityPolmyerizationTank extends RecipeMapMultiblockController {
+
     public MetaTileEntityPolmyerizationTank(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, SuSyRecipeMaps.POLYMERIZATION_RECIPES);
         this.recipeMapWorkable = new MultiblockRecipeLogic(this, true);
@@ -47,6 +50,7 @@ public class MetaTileEntityPolmyerizationTank extends RecipeMapMultiblockControl
                         .or(this.autoAbilities(true, true, true, true, true, true, false)))
                 .build();
     }
+
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
         return Textures.SOLID_STEEL_CASING;
     }

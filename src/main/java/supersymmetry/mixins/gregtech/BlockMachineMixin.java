@@ -1,19 +1,21 @@
 package supersymmetry.mixins.gregtech;
 
-import gregtech.api.block.BlockCustomParticle;
-import gregtech.api.block.machines.BlockMachine;
-import gregtech.api.metatileentity.MetaTileEntity;
+import static gregtech.api.util.GTUtility.getMetaTileEntity;
+
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
 import org.jetbrains.annotations.ApiStatus.ScheduledForRemoval;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 
-import static gregtech.api.util.GTUtility.getMetaTileEntity;
+import gregtech.api.block.BlockCustomParticle;
+import gregtech.api.block.machines.BlockMachine;
+import gregtech.api.metatileentity.MetaTileEntity;
 
 @Deprecated
 @ScheduledForRemoval(inVersion = "Next CEu update")

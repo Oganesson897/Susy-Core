@@ -1,6 +1,11 @@
 package supersymmetry.common.blocks;
 
-import gregtech.api.util.BlockUtility;
+import java.util.Comparator;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -9,20 +14,18 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import gregtech.api.util.BlockUtility;
 
 public class SuSyBlocks {
 
     public static BlockCoolingCoil COOLING_COIL;
     public static BlockSinteringBrick SINTERING_BRICK;
     public static BlockCoagulationTankWall COAGULATION_TANK_WALL;
-    public static final EnumMap<SusyStoneVariantBlock.StoneVariant, SusyStoneVariantBlock> SUSY_STONE_BLOCKS = new EnumMap<>(SusyStoneVariantBlock.StoneVariant.class);
+    public static final EnumMap<SusyStoneVariantBlock.StoneVariant, SusyStoneVariantBlock> SUSY_STONE_BLOCKS = new EnumMap<>(
+            SusyStoneVariantBlock.StoneVariant.class);
     public static BlockAlternatorCoil ALTERNATOR_COIL;
     public static BlockTurbineRotor TURBINE_ROTOR;
     public static BlockSeparatorRotor SEPARATOR_ROTOR;
@@ -98,7 +101,6 @@ public class SuSyBlocks {
 
         SERPENTINE = new BlockSerpentine();
         SERPENTINE.setRegistryName("serpentine");
-
     }
 
     @SideOnly(Side.CLIENT)
@@ -169,7 +171,8 @@ public class SuSyBlocks {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends Comparable<T>> @NotNull String getPropertyName(@NotNull IProperty<T> property, Comparable<?> value) {
+    private static <T extends Comparable<T>> @NotNull String getPropertyName(@NotNull IProperty<T> property,
+                                                                             Comparable<?> value) {
         return property.getName((T) value);
     }
 }

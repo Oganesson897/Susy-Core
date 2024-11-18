@@ -1,5 +1,10 @@
 package supersymmetry.common.metatileentities.multi.electric;
 
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -13,9 +18,6 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockBoilerCasing.BoilerCasingType;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
 import supersymmetry.api.recipes.SuSyRecipeMaps;
 import supersymmetry.client.renderer.textures.SusyTextures;
 
@@ -41,13 +43,20 @@ public class MetaTileEntityCoolingUnit extends RecipeMapMultiblockController {
         TraceabilityPredicate casingPredicate = states(getCasingState()).setMinGlobalLimited(270);
 
         return FactoryBlockPattern.start()
-                .aisle("AAAAAAA", "AAAAAAA", "AAAAAAA", "AAAAAAA", "AADDDAA", "AAAAAAA", "AAAAAAA", "AAAAAAA", "AAAAAAA", "       ", "  EEE  ")
-                .aisle("AAAAAAA", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "AAAAAAA", " EEEEE ", " EEEEE ")
-                .aisle("AAAAAAA", "A##B##A", "A##B##A", "A##B##A", "D##B##D", "A##B##A", "A##B##A", "A##B##A", "AAAAAAA", " E   E ", "EE C EE")
-                .aisle("AAAAAAA", "A#BDB#A", "A#BDB#A", "A#BDB#A", "D#BDB#D", "A#BDB#A", "A#BDB#A", "A#BDB#A", "AAAAAAA", " E C E ", "EECCCEE")
-                .aisle("AAAAAAA", "A##B##A", "A##B##A", "A##B##A", "D##B##D", "A##B##A", "A##B##A", "A##B##A", "AAAAAAA", " E   E ", "EE C EE")
-                .aisle("AAAAAAA", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "AAAAAAA", " EEEEE ", " EEEEE ")
-                .aisle("AAASAAA", "AAAAAAA", "AAAAAAA", "AAAAAAA", "AADDDAA", "AAAAAAA", "AAAAAAA", "AAAAAAA", "AAAAAAA", "       ", "  EEE  ")
+                .aisle("AAAAAAA", "AAAAAAA", "AAAAAAA", "AAAAAAA", "AADDDAA", "AAAAAAA", "AAAAAAA", "AAAAAAA",
+                        "AAAAAAA", "       ", "  EEE  ")
+                .aisle("AAAAAAA", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A",
+                        "AAAAAAA", " EEEEE ", " EEEEE ")
+                .aisle("AAAAAAA", "A##B##A", "A##B##A", "A##B##A", "D##B##D", "A##B##A", "A##B##A", "A##B##A",
+                        "AAAAAAA", " E   E ", "EE C EE")
+                .aisle("AAAAAAA", "A#BDB#A", "A#BDB#A", "A#BDB#A", "D#BDB#D", "A#BDB#A", "A#BDB#A", "A#BDB#A",
+                        "AAAAAAA", " E C E ", "EECCCEE")
+                .aisle("AAAAAAA", "A##B##A", "A##B##A", "A##B##A", "D##B##D", "A##B##A", "A##B##A", "A##B##A",
+                        "AAAAAAA", " E   E ", "EE C EE")
+                .aisle("AAAAAAA", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A", "A#####A",
+                        "AAAAAAA", " EEEEE ", " EEEEE ")
+                .aisle("AAASAAA", "AAAAAAA", "AAAAAAA", "AAAAAAA", "AADDDAA", "AAAAAAA", "AAAAAAA", "AAAAAAA",
+                        "AAAAAAA", "       ", "  EEE  ")
                 .where('S', selfPredicate())
                 .where('A', casingPredicate
                         .or(autoAbilities(true, true, true, true, true, true, false)))

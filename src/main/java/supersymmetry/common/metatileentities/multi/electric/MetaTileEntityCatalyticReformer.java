@@ -1,5 +1,9 @@
 package supersymmetry.common.metatileentities.multi.electric;
 
+import javax.annotation.Nonnull;
+
+import net.minecraft.util.ResourceLocation;
+
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -13,11 +17,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockBoilerCasing;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.util.ResourceLocation;
 import supersymmetry.api.recipes.SuSyRecipeMaps;
-import supersymmetry.client.renderer.textures.SusyTextures;
-
-import javax.annotation.Nonnull;
 
 public class MetaTileEntityCatalyticReformer extends RecipeMapMultiblockController {
 

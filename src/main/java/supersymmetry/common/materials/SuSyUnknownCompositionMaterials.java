@@ -1,16 +1,15 @@
 package supersymmetry.common.materials;
 
+import static supersymmetry.common.materials.SusyMaterials.*;
+
 import gregtech.api.fluids.FluidBuilder;
 import gregtech.api.fluids.store.FluidStorageKeys;
 import gregtech.api.unification.material.Material;
 import supersymmetry.api.util.SuSyUtility;
 
-import static supersymmetry.common.materials.SusyMaterials.*;
-
 public class SuSyUnknownCompositionMaterials {
 
     public static void init() {
-
         Latex = new Material.Builder(27050, SuSyUtility.susyId("latex"))
                 .dust().fluid(FluidStorageKeys.LIQUID, new FluidBuilder().temperature(293))
                 .color(0xFFFADA)
@@ -26,5 +25,4 @@ public class SuSyUnknownCompositionMaterials {
                 .color(0x3c5bc2)
                 .build();
     }
-
 }

@@ -1,14 +1,16 @@
 package supersymmetry.api.unification.ore;
 
-import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.ore.StoneType;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
+
+import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.ore.StoneType;
 import supersymmetry.common.blocks.SuSyBlocks;
 import supersymmetry.common.blocks.SusyStoneVariantBlock;
 import supersymmetry.common.materials.SusyMaterials;
 
 public class SusyStoneTypes {
+
     public static StoneType GABBRO;
     public static StoneType GNEISS;
     public static StoneType GRAPHITE;
@@ -21,9 +23,9 @@ public class SusyStoneTypes {
     public static StoneType SOAPSTONE;
     public static StoneType KIMBERLITE;
 
-    public SusyStoneTypes(){
-    }
-    public static void init(){
+    public SusyStoneTypes() {}
+
+    public static void init() {
         GABBRO = new StoneType(12, "gabbro", SoundType.STONE, SusyOrePrefix.oreGabbro, SusyMaterials.Gabbro,
                 () -> gtStoneState(SusyStoneVariantBlock.StoneType.GABBRO),
                 state -> gtStonePredicate(state, SusyStoneVariantBlock.StoneType.GABBRO), false);
@@ -48,10 +50,12 @@ public class SusyStoneTypes {
         SOAPSTONE = new StoneType(19, "soapstone", SoundType.STONE, SusyOrePrefix.oreSoapstone, Materials.Soapstone,
                 () -> gtStoneState(SusyStoneVariantBlock.StoneType.SOAPSTONE),
                 state -> gtStonePredicate(state, SusyStoneVariantBlock.StoneType.SOAPSTONE), false);
-        KIMBERLITE = new StoneType(20, "kimberlite", SoundType.STONE, SusyOrePrefix.oreKimberlite, SusyMaterials.Kimberlite,
+        KIMBERLITE = new StoneType(20, "kimberlite", SoundType.STONE, SusyOrePrefix.oreKimberlite,
+                SusyMaterials.Kimberlite,
                 () -> gtStoneState(SusyStoneVariantBlock.StoneType.KIMBERLITE),
                 state -> gtStonePredicate(state, SusyStoneVariantBlock.StoneType.KIMBERLITE), false);
     }
+
     private static IBlockState gtStoneState(SusyStoneVariantBlock.StoneType stoneType) {
         return SuSyBlocks.SUSY_STONE_BLOCKS.get(SusyStoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);
     }

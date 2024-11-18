@@ -1,33 +1,24 @@
 package supersymmetry.loaders.recipes;
 
-import cam72cam.immersiverailroading.IRItems;
-import cam72cam.mod.serialization.TagCompound;
-import gregtech.api.GTValues;
-import gregtech.api.recipes.GTRecipeHandler;
-import gregtech.api.recipes.ModHandler;
-import gregtech.api.recipes.ingredients.nbtmatch.NBTCondition;
-import gregtech.api.recipes.ingredients.nbtmatch.NBTMatcher;
-import gregtech.api.recipes.ingredients.nbtmatch.NBTTagType;
-import gregtech.api.unification.material.Materials;
-import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.blocks.StoneVariantBlock;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import supersymmetry.api.recipes.SuSyRecipeMaps;
-import supersymmetry.common.blocks.SuSyBlocks;
-import supersymmetry.common.blocks.SusyStoneVariantBlock;
-import supersymmetry.common.materials.SusyMaterials;
-import supersymmetry.loaders.SuSyMetaTileEntityLoader;
-import trackapi.lib.Gauges;
+import static gregtech.api.recipes.RecipeMaps.*;
+import static gregtech.api.unification.ore.OrePrefix.*;
+import static gregtech.common.items.MetaItems.SHAPE_EXTRUDER_BLOCK;
 
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static gregtech.api.recipes.RecipeMaps.*;
-import static gregtech.api.unification.ore.OrePrefix.*;
-import static gregtech.common.items.MetaItems.SHAPE_EXTRUDER_BLOCK;
+import net.minecraft.item.ItemStack;
+
+import gregtech.api.recipes.ModHandler;
+import gregtech.api.unification.material.Materials;
+import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.blocks.StoneVariantBlock;
+import supersymmetry.common.blocks.SuSyBlocks;
+import supersymmetry.common.blocks.SusyStoneVariantBlock;
+import supersymmetry.common.materials.SusyMaterials;
+import supersymmetry.loaders.SuSyMetaTileEntityLoader;
 
 public class SuSyRecipeLoader {
 
@@ -40,48 +31,50 @@ public class SuSyRecipeLoader {
         SuSyMaterialRecipeHandler.init();
         registerStoneRecipes();
 
-        //GTRecipeHandler.removeAllRecipes(ELECTROLYZER_RECIPES);
+        // GTRecipeHandler.removeAllRecipes(ELECTROLYZER_RECIPES);
 
         // make more loaders to categorize recipes and what is added
 
-        //RES Example Recipe
+        // RES Example Recipe
 
         /*
-        TagCompound tag = new TagCompound();
-
-        tag.setString("defID", "rolling_stock/locomotives/k4_pacific.json");
-        tag.setFloat("gauge", (float) Gauges.STANDARD);
-
-        cam72cam.mod.item.ItemStack is = new cam72cam.mod.item.ItemStack(IRItems.ITEM_ROLLING_STOCK, 1);
-        is.setTagCompound(tag);
-        SuSyRecipeMaps.RAILROAD_ENGINEERING_STATION_RECIPES.recipeBuilder()
-                .input(plate, Materials.Steel)
-                .input(plate, Materials.Iron)
-                .outputs(is.internal)
-                .EUt(GTValues.VA[4])
-                .duration(1000)
-                .buildAndRegister();
-
-        SuSyRecipeMaps.RAILROAD_ENGINEERING_STATION_RECIPES.recipeBuilder()
-                .inputNBT(IRItems.ITEM_ROLLING_STOCK.internal, NBTMatcher.EQUAL_TO, NBTCondition.create(NBTTagType.STRING, "defID", "rolling_stock/locomotives/black_mesa_tram.json"))
-                .outputs(is.internal)
-                .EUt(GTValues.VA[4])
-                .duration(4000)
-                .buildAndRegister();
-
-
-        SuSyRecipeMaps.DRONE_PAD.recipeBuilder()
-                .input(ingot, Materials.Iron)
-                .output(Items.BEEF, 16)
-                .duration(10)
-                .dimension(0)
-                .EUt(2)
-                .buildAndRegister();
-        */
+         * TagCompound tag = new TagCompound();
+         * 
+         * tag.setString("defID", "rolling_stock/locomotives/k4_pacific.json");
+         * tag.setFloat("gauge", (float) Gauges.STANDARD);
+         * 
+         * cam72cam.mod.item.ItemStack is = new cam72cam.mod.item.ItemStack(IRItems.ITEM_ROLLING_STOCK, 1);
+         * is.setTagCompound(tag);
+         * SuSyRecipeMaps.RAILROAD_ENGINEERING_STATION_RECIPES.recipeBuilder()
+         * .input(plate, Materials.Steel)
+         * .input(plate, Materials.Iron)
+         * .outputs(is.internal)
+         * .EUt(GTValues.VA[4])
+         * .duration(1000)
+         * .buildAndRegister();
+         * 
+         * SuSyRecipeMaps.RAILROAD_ENGINEERING_STATION_RECIPES.recipeBuilder()
+         * .inputNBT(IRItems.ITEM_ROLLING_STOCK.internal, NBTMatcher.EQUAL_TO, NBTCondition.create(NBTTagType.STRING,
+         * "defID", "rolling_stock/locomotives/black_mesa_tram.json"))
+         * .outputs(is.internal)
+         * .EUt(GTValues.VA[4])
+         * .duration(4000)
+         * .buildAndRegister();
+         * 
+         * 
+         * SuSyRecipeMaps.DRONE_PAD.recipeBuilder()
+         * .input(ingot, Materials.Iron)
+         * .output(Items.BEEF, 16)
+         * .duration(10)
+         * .dimension(0)
+         * .EUt(2)
+         * .buildAndRegister();
+         */
     }
 
-    private static void registerStoneRecipes(){
-        EnumMap<SusyStoneVariantBlock.StoneVariant, List<ItemStack>> susyVariantListMap = new EnumMap<>(SusyStoneVariantBlock.StoneVariant.class);
+    private static void registerStoneRecipes() {
+        EnumMap<SusyStoneVariantBlock.StoneVariant, List<ItemStack>> susyVariantListMap = new EnumMap<>(
+                SusyStoneVariantBlock.StoneVariant.class);
         for (SusyStoneVariantBlock.StoneVariant shape : SusyStoneVariantBlock.StoneVariant.values()) {
             SusyStoneVariantBlock block = SuSyBlocks.SUSY_STONE_BLOCKS.get(shape);
             susyVariantListMap.put(shape,
@@ -92,7 +85,8 @@ public class SuSyRecipeLoader {
         List<ItemStack> susycobbles = susyVariantListMap.get(SusyStoneVariantBlock.StoneVariant.COBBLE);
         List<ItemStack> susysmooths = susyVariantListMap.get(SusyStoneVariantBlock.StoneVariant.SMOOTH);
 
-        EnumMap<StoneVariantBlock.StoneVariant, List<ItemStack>> variantListMap = new EnumMap<>(StoneVariantBlock.StoneVariant.class);
+        EnumMap<StoneVariantBlock.StoneVariant, List<ItemStack>> variantListMap = new EnumMap<>(
+                StoneVariantBlock.StoneVariant.class);
         for (StoneVariantBlock.StoneVariant shape : StoneVariantBlock.StoneVariant.values()) {
             StoneVariantBlock block = MetaBlocks.STONE_BLOCKS.get(shape);
             variantListMap.put(shape,
@@ -132,11 +126,11 @@ public class SuSyRecipeLoader {
         }
     }
 
-
     private static void registerCobbleSmashingRecipe(List<ItemStack> smoothStack, List<ItemStack> cobbleStack) {
         for (int i = 0; i < smoothStack.size(); i++) {
 
-            ModHandler.addShapedRecipe(smoothStack.get(i).getDisplayName() + "_hammer_smashing", cobbleStack.get(i), new Object[]{"hS", 'S', smoothStack.get(i)});
+            ModHandler.addShapedRecipe(smoothStack.get(i).getDisplayName() + "_hammer_smashing", cobbleStack.get(i),
+                    new Object[] { "hS", 'S', smoothStack.get(i) });
         }
     }
 
@@ -181,11 +175,9 @@ public class SuSyRecipeLoader {
                 .output(dust, Materials.Soapstone)
                 .buildAndRegister();
 
-
         MACERATOR_RECIPES.recipeBuilder()
                 .input(stone, SusyMaterials.Kimberlite)
                 .output(dust, SusyMaterials.Kimberlite)
                 .buildAndRegister();
-
     }
 }

@@ -1,5 +1,10 @@
 package supersymmetry.common.metatileentities.multiblockpart;
 
+import java.util.List;
+
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.items.IItemHandlerModifiable;
+
 import gregtech.api.capability.impl.NotifiableItemStackHandler;
 import gregtech.api.items.itemhandlers.GTItemStackHandler;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -7,12 +12,8 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.common.metatileentities.multi.multiblockpart.MetaTileEntityItemBus;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.IItemHandlerModifiable;
 import supersymmetry.api.metatileentity.multiblock.SuSyMultiblockAbilities;
 import supersymmetry.client.renderer.textures.SusyTextures;
-
-import java.util.List;
 
 public class MetaTileEntityPrimitiveItemBus extends MetaTileEntityItemBus {
 
@@ -33,7 +34,8 @@ public class MetaTileEntityPrimitiveItemBus extends MetaTileEntityItemBus {
 
     @Override
     public MultiblockAbility<IItemHandlerModifiable> getAbility() {
-        return isExportHatch ? SuSyMultiblockAbilities.PRIMITIVE_EXPORT_ITEMS : SuSyMultiblockAbilities.PRIMITIVE_IMPORT_ITEMS;
+        return isExportHatch ? SuSyMultiblockAbilities.PRIMITIVE_EXPORT_ITEMS :
+                SuSyMultiblockAbilities.PRIMITIVE_IMPORT_ITEMS;
     }
 
     @Override
@@ -60,6 +62,7 @@ public class MetaTileEntityPrimitiveItemBus extends MetaTileEntityItemBus {
     protected IItemHandlerModifiable createExportItemHandler() {
         return !isExportHatch ? new GTItemStackHandler(this, 0) :
                 new NotifiableItemStackHandler(this, 4, getController(), true) {
+
                     @Override
                     public int getSlotLimit(int slot) {
                         return 16;
@@ -71,6 +74,7 @@ public class MetaTileEntityPrimitiveItemBus extends MetaTileEntityItemBus {
     protected IItemHandlerModifiable createImportItemHandler() {
         return isExportHatch ? new GTItemStackHandler(this, 0) :
                 new NotifiableItemStackHandler(this, 4, getController(), false) {
+
                     @Override
                     public int getSlotLimit(int slot) {
                         return 16;

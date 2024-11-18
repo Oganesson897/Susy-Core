@@ -1,5 +1,10 @@
 package supersymmetry.common.metatileentities.multi.electric;
 
+import javax.annotation.Nonnull;
+
+import net.minecraft.init.SoundEvents;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 
 import gregtech.api.GTValues;
 import gregtech.api.metatileentity.MetaTileEntity;
@@ -13,13 +18,8 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.ConfigHolder;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import supersymmetry.api.recipes.SuSyRecipeMaps;
 import supersymmetry.api.capability.impl.NoEnergyMultiblockRecipeLogic;
-
-import javax.annotation.Nonnull;
+import supersymmetry.api.recipes.SuSyRecipeMaps;
 
 public class MetaTileEntityReverberatoryFurnace extends RecipeMapMultiblockController {
 
@@ -84,9 +84,7 @@ public class MetaTileEntityReverberatoryFurnace extends RecipeMapMultiblockContr
         }
     }
 
-    private void pollutionParticles() {
-
-    }
+    private void pollutionParticles() {}
 
     @Override
     public void randomDisplayTick() {
@@ -109,7 +107,8 @@ public class MetaTileEntityReverberatoryFurnace extends RecipeMapMultiblockContr
                 x += horizontalOffset;
             }
             if (ConfigHolder.machines.machineSounds && GTValues.RNG.nextDouble() < 0.1) {
-                getWorld().playSound(x, y, z, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+                getWorld().playSound(x, y, z, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F,
+                        false);
             }
             getWorld().spawnParticle(EnumParticleTypes.SMOKE_LARGE, x, y, z, 0, 0, 0);
             getWorld().spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0, 0, 0);

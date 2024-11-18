@@ -1,14 +1,13 @@
 package supersymmetry.api.recipes.properties;
 
-import gregtech.api.worldgen.config.WorldGenRegistry;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.client.Minecraft;
+import java.util.Map;
 
-import gregtech.api.recipes.recipeproperties.RecipeProperty;
-import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 
-import java.util.Map;
+import gregtech.api.recipes.recipeproperties.RecipeProperty;
+import gregtech.api.worldgen.config.WorldGenRegistry;
+import it.unimi.dsi.fastutil.ints.IntList;
 
 public class DroneDimensionProperty extends RecipeProperty<IntList> {
 
@@ -47,5 +46,4 @@ public class DroneDimensionProperty extends RecipeProperty<IntList> {
         }
         return str;
     }
-
 }

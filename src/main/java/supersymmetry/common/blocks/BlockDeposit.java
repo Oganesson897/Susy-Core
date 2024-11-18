@@ -1,7 +1,7 @@
 package supersymmetry.common.blocks;
 
-import gregtech.api.block.IStateHarvestLevel;
-import gregtech.api.block.VariantBlock;
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,9 +11,11 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
+import gregtech.api.block.IStateHarvestLevel;
+import gregtech.api.block.VariantBlock;
 
 public class BlockDeposit extends VariantBlock<BlockDeposit.DepositBlockType> {
+
     public BlockDeposit() {
         super(net.minecraft.block.material.Material.ANVIL);
         setTranslationKey("deposit_block");
@@ -41,6 +43,7 @@ public class BlockDeposit extends VariantBlock<BlockDeposit.DepositBlockType> {
     }
 
     public static enum DepositBlockType implements IStringSerializable, IStateHarvestLevel {
+
         ORTHOMAGMATIC("orthomagmatic", 10),
         METAMORPHIC("metamorphic", 10),
         SEDIMENTARY("sedimentary", 10),

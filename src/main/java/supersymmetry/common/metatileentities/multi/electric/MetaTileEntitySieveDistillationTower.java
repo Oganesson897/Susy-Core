@@ -1,5 +1,24 @@
 package supersymmetry.common.metatileentities.multi.electric;
 
+import static gregtech.api.util.RelativeDirection.*;
+import static supersymmetry.api.recipes.SuSyRecipeMaps.SIEVE_DISTILLATION_RECIPES;
+
+import java.util.List;
+import java.util.function.Function;
+
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.IItemHandlerModifiable;
+
+import org.jetbrains.annotations.NotNull;
+
 import gregtech.api.capability.IDistillationTower;
 import gregtech.api.capability.IMultipleTankHandler;
 import gregtech.api.capability.impl.DistillationTowerLogicHandler;
@@ -21,27 +40,11 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import gregtech.core.sound.GTSoundEvents;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import org.jetbrains.annotations.NotNull;
 import supersymmetry.common.blocks.BlockSuSyMultiblockCasing;
 import supersymmetry.common.blocks.SuSyBlocks;
 
-import java.util.List;
-import java.util.function.Function;
-
-import static gregtech.api.util.RelativeDirection.*;
-import static supersymmetry.api.recipes.SuSyRecipeMaps.SIEVE_DISTILLATION_RECIPES;
-
 public class MetaTileEntitySieveDistillationTower extends RecipeMapMultiblockController implements IDistillationTower {
+
     protected DistillationTowerLogicHandler handler;
 
     public MetaTileEntitySieveDistillationTower(ResourceLocation metaTileEntityId) {
